@@ -1,9 +1,9 @@
 body {
   height: 796px;
+  background-color: #DAA520;
 }
 
 .square {
-  background: white;
   border: 1px solid black;
   float: left;
   margin-top: -1px;
@@ -15,6 +15,7 @@ body {
   font-size: 80px;
   font-weight: bold;
   line-height: 120px;
+  background-color: #A0522D;
 }
 
 .square:focus {
@@ -54,6 +55,8 @@ body {
   margin-left: 40px;
   border-radius: 50%;
   border: 1px solid black;
+  background-color: #DC143C;
+  color: white;
 }
 
 .restart-btn {
