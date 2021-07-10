@@ -16,3 +16,9 @@
 .square:focus {
   outline: none;
 }
+
+.border-row {
+  clear: both;
+  content: "";
+  display: table;
+}
