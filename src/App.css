@@ -1,3 +1,7 @@
+body {
+  height: 796px;
+}
+
 .square {
   background: white;
   border: 1px solid black;
