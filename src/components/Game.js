@@ -13,6 +13,15 @@ export default class Game extends Component {
       ]
     }
   }
+  resetGame() {
+    this.setState({
+      xIsNext: true,
+      stepNumber: 0,
+      history: [
+        { squares: Array(9).fill(null) }
+      ]
+    })
+  }
 
   handleClick(i) {
     const history = this.state.history.slice(0, this.state.stepNumber+1);
@@ -36,13 +45,23 @@ export default class Game extends Component {
     const history = this.state.history;
     const current = history[this.state.stepNumber];
     const winner = decideWinner(current.squares);
+    const restartBtn = ()=>{
+      return(
+          <div class='restart-btn' onClick={()=>{this.resetGame()}}>
+            Restart
+          </div>
+      )
+    }
     let status;
-    if(!this.state.stepNumber) {
+    if(history.length === 1) {
       status = 'Start the game'
     }
     else{
       if(winner) {
         status = 'Winner is ' + winner
+      }
+      else if (history.length > 9) {
+        status = 'Game is Tied'
       }
       else {
         status = 'Next player is ' + (this.state.xIsNext ? 'X' : 'O');
@@ -52,7 +71,8 @@ export default class Game extends Component {
     return (
       <div class='game-wrapper'>
         <div class="game-info">
-          <div>{status}</div>
+          <div class='info-wrapper'>{status}</div>
+          <div class='btn-wrapper'>{restartBtn()}</div>
         </div>
         <div className="game">
           <div className="game-board">

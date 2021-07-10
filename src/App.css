@@ -34,6 +34,31 @@
 }
 
 .game-info {
+  display: flex;
   margin: 90px auto;
-  font-size: 60px;
+}
+
+.info-wrapper {
+  font-size: 45px;
+  margin-top: 15px;
+  font-weight: 700;
+}
+
+.btn-wrapper {
+  height: 100px;
+  width: 100px;
+  margin-left: 40px;
+  border-radius: 50%;
+  border: 1px solid black;
+}
+
+.restart-btn {
+  height: 100%;
+  width: 100%;
+  font-weight: bold;
+  text-align: center;
+  padding-top: 37px;
+}
+
+.restart-btn:active {
 }
