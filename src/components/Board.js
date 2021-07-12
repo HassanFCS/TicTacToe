@@ -8,7 +8,7 @@ export default class Board extends Component {
     />
   }
   createBoard = ()=>{
-    let size = 5
+    let size = 3
     let board = []
     for (let i=0; i<size; i++) {
       let rows = []
