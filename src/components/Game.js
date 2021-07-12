@@ -8,10 +8,8 @@ export default class Game extends Component {
     this.state = {
       xIsNext: true,
       stepNumber: 0,
-      size: 5,
-      history: [
-        { squares: Array(9).fill(null) }
-      ]
+      size: 3,
+      squares: Array(9).fill(null)
     }
   }
   squareSize = ()=> {
@@ -22,36 +20,29 @@ export default class Game extends Component {
     this.setState({
       xIsNext: true,
       stepNumber: 0,
-      history: [
-        { squares: Array(this.squareSize()).fill(null) }
-      ]
+      squares: Array(this.squareSize()).fill(null)
     })
   }
 
   handleClick(i) {
     const size = this.state.size
-    const history = this.state.history.slice(0, this.state.stepNumber+1);
-    const current = history[history.length-1];
-    const squares = current.squares.slice();
+    const squares = this.state.squares
     const winner = decideWinner(squares, size);
     if (winner || squares[i]) {
       return;
     }
     squares[i] = this.state.xIsNext ? 'X' : 'O';
     this.setState({
-      history: history.concat({
-        squares: squares
-      }),
+      squares: squares,
       xIsNext: !this.state.xIsNext,
-      stepNumber: history.length
+      stepNumber: this.state.stepNumber + 1
     })
   }
 
   render() {
     const size = this.state.size
-    const history = this.state.history;
-    const current = history[this.state.stepNumber];
-    const winner = decideWinner(current.squares, size);
+    const squares = this.state.squares
+    const winner = decideWinner(squares, size);
     const restartBtn = ()=>{
       return(
           <div class='restart-btn' onClick={()=>{this.resetGame()}}>
@@ -60,14 +51,14 @@ export default class Game extends Component {
       )
     }
     let status;
-    if(history.length === 1) {
+    if(this.state.stepNumber === 0) {
       status = 'Start the game'
     }
     else{
       if(winner) {
         status = 'Winner is ' + winner
       }
-      else if (history.length > this.squareSize()) {
+      else if (this.state.stepNumber === this.squareSize()) {
         status = 'Game is Tied'
       }
       else {
@@ -84,7 +75,7 @@ export default class Game extends Component {
         <div className="game">
           <div className="game-board">
             <Board onClick = {(i)=>this.handleClick(i)}
-            squares={current.squares}
+            squares={squares}
             />
           </div>
         </div>
@@ -93,8 +84,7 @@ export default class Game extends Component {
   }
 }
 
-function winningPositions(){
-  let size = 5
+function winningPositions(size){
   let positions = []
   //row wise winning posititons
   for(let i=0;i<size; i++){
@@ -128,20 +118,20 @@ function winningPositions(){
 }
 
 function decideWinner(squares, size) {
-  const lines = winningPositions()
+  const lines = winningPositions(size)
 
   for(let i=0; i<lines.length; i++) {
-    if(size == 3){
+    if(size === 3){
       const [a, b, c] = lines[i];
       if (squares[a] && squares[a] === squares[b] && squares[b] === squares[c])
         return squares[a]
     }
-    else if(size == 4){
+    else if(size === 4){
       const [a, b, c, d] = lines[i];
       if (squares[a] && squares[a] === squares[b] && squares[b] === squares[c] && squares[c] === squares[d])
         return squares[a]
     }
-    else if(size == 5){
+    else if(size === 5){
       const [a, b, c, d, e] = lines[i];
       if (squares[a] && squares[a] === squares[b] && squares[b] === squares[c] && squares[c] === squares[d] && squares[d] === squares[e])
         return squares[a]
